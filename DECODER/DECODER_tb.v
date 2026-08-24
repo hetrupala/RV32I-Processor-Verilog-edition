@@ -33,6 +33,10 @@ module DECODER_tb;
     wire alu_src_b_out;
     wire reg_write_out;
     wire [5:0] alu_op_out;
+
+    // New output from DECODER
+    wire [2:0] imm_type_out;
+
     wire [4:0] rs1_addr_out;
     wire [4:0] rs2_addr_out;
     wire [4:0] rd_addr_out;
@@ -49,6 +53,10 @@ module DECODER_tb;
         .alu_src_b_out(alu_src_b_out),
         .reg_write_out(reg_write_out),
         .alu_op_out(alu_op_out),
+
+        // New decoder output
+        .imm_type_out(imm_type_out),
+
         .rs1_addr_out(rs1_addr_out),
         .rs2_addr_out(rs2_addr_out),
         .rd_addr_out(rd_addr_out)
@@ -60,6 +68,7 @@ module DECODER_tb;
 
         // ============================================================
         // R-TYPE INSTRUCTIONS
+        // imm_type = 101
         // ============================================================
 
         // ADD x3, x1, x2
@@ -105,6 +114,7 @@ module DECODER_tb;
 
         // ============================================================
         // I-TYPE OP-IMM INSTRUCTIONS
+        // imm_type = 000
         // ============================================================
 
         // ADDI x3, x1, 10
@@ -142,10 +152,11 @@ module DECODER_tb;
         // ANDI x8, x1, 10
         instruction_in = 32'h00A0F413;
         #10;
-        
-        
+
+
         // ============================================================
         // LOAD TYPE INSTRUCTIONS
+        // imm_type = 000
         // ============================================================
 
         // LB x3, 8(x1)
@@ -177,9 +188,11 @@ module DECODER_tb;
         // funct3 = 101
         instruction_in = 32'h0080D383;
         #10;
-        
+
+
         // ============================================================
         // S-TYPE / STORE INSTRUCTIONS
+        // imm_type = 001
         // ============================================================
 
         // SB x5, 8(x1)
@@ -199,9 +212,11 @@ module DECODER_tb;
         // funct3 = 010
         instruction_in = 32'h0050A423;
         #10;
-        
+
+
         // ============================================================
         // B-TYPE / BRANCH INSTRUCTIONS
+        // imm_type = 010
         // ============================================================
 
         // BEQ x1, x2, 16
@@ -239,9 +254,11 @@ module DECODER_tb;
         // funct3 = 111
         instruction_in = 32'h0020F863;
         #10;
-        
+
+
         // ============================================================
         // U-TYPE INSTRUCTIONS
+        // imm_type = 011
         // ============================================================
 
         // LUI x5, 0x12345
@@ -267,9 +284,11 @@ module DECODER_tb;
         // rd = x10
         instruction_in = 32'hABCDE517;
         #10;
-        
+
+
         // ============================================================
         // J-TYPE INSTRUCTIONS
+        // imm_type = 100
         // ============================================================
 
         // JAL x5, 100
@@ -297,5 +316,4 @@ module DECODER_tb;
         $finish;
 
     end
-
 endmodule
