@@ -12,7 +12,6 @@
 // Description: RV32I Instruction Decoder
 // 
 // Dependencies: 
-// 
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
@@ -38,7 +37,7 @@ module DECODER(
     output reg [4:0] rs1_addr_out,
     output reg [4:0] rs2_addr_out,
     output reg [4:0] rd_addr_out
-    );
+);
 
 
     always @(*) begin
@@ -585,6 +584,35 @@ module DECODER(
 
 
             // ========================================================
+            // I-TYPE JALR
+            // Opcode = 1100111
+            // funct3 = 000
+            // ========================================================
+
+            7'b1100111: begin
+
+                opcode_out   = instruction_in[6:0];
+                imm_type_out = 3'b000;
+
+                case (instruction_in[14:12])
+
+                    3'b000: begin
+
+                        // JALR
+                        // rd = PC + 4
+                        // PC = (rs1 + immediate) & ~1
+                        // Immediate Generator handles the I-type immediate
+
+                        reg_write_out = 1'b1;
+
+                    end
+
+                endcase
+
+            end
+
+
+            // ========================================================
             // DEFAULT
             // ========================================================
 
@@ -597,4 +625,5 @@ module DECODER(
         endcase
 
     end
+
 endmodule
