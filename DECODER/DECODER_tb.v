@@ -311,6 +311,19 @@ module DECODER_tb;
         // immediate = 16
         instruction_in = 32'h010000EF;
         #10;
+        
+        // ============================================================
+        // JALR INSTRUCTION
+        // ============================================================
+
+        // JALR x5, 16(x2)
+        // opcode = 1100111
+        // funct3 = 000
+        // rs1 = x2
+        // rd = x5
+        // immediate = 16
+        instruction_in = 32'h010102E7;
+        #10;
 
 
         $finish;
